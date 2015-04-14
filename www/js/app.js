@@ -30,11 +30,12 @@ angular.module('floor', ['ngResource', 'ionic', 'floor.controllers', 'floor.serv
     controller: 'AppCtrl'
   })
 
-  .state('app.search', {
-    url: "/search",
+  .state('app.status', {
+    url: "/status",
     views: {
       'menuContent': {
-        templateUrl: "templates/search.html"
+        templateUrl: "templates/status.html",
+        controller: 'StatusCtrl'
       }
     }
   })

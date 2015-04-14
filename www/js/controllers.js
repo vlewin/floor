@@ -1,5 +1,14 @@
 angular.module('floor.controllers', [])
 
+.run(function($ionicPlatform, $rootScope) {
+  $ionicPlatform.ready(function() {
+    setTimeout(function() {
+        $rootScope.status = 'No network connection!';
+    }, 100);
+ });
+})
+
+
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
   // Form data for the login modal
   $scope.loginData = {};
@@ -56,3 +65,18 @@ angular.module('floor.controllers', [])
 
 
 
+
+.controller('StatusCtrl', function($rootScope, $scope, $http) {
+  $scope.check = function () {
+    $http.get('http://stealth-new.suse.de:3001').success(function(data, status, headers, config) {
+      $scope.status = data['status']
+      $scope.api_url = config.url
+    }).error(function(data, status, headers, config) {
+      $scope.api_url = config.url
+    });
+  }
+
+
+
+  $scope.check()
+})

@@ -1,0 +1,20 @@
+<ion-view view-title="Status">
+  <ion-content class="padding">
+    <div class="list card">
+
+      <a class="item item-icon-left assertive" ng-class="{ 'balanced': status == 'OK' }" href="#">
+        <i class="icon" ng-class="{ 'ion-ios-checkmark-outline': status === 'OK', 'ion-ios-minus-outline': status !== 'OK' }"></i>
+        Status: {{ status }}
+      </a>
+
+      <div class="item item-image">
+        <img src="http://thaifountain.co.th/home/images/Microcontroller-Network.jpg">
+      </div>
+
+      <a class="item" href="{{api_url}}">
+        API: {{api_url}}
+      </a>
+
+    </div>
+  </ion-content>
+</ion-view>
