@@ -47,7 +47,7 @@ angular.module('floor.controllers', [])
 
   $scope.clearSearch = function () {
     $scope.searchKey = "";
-    $scope.employees = Employee.query({limit:10});
+    $scope.employees = Employee.query({limit:50});
   }
 
   $scope.search = function () {
@@ -56,7 +56,7 @@ angular.module('floor.controllers', [])
     }
   }
 
-  $scope.employees = Employee.query({limit:10});
+  $scope.employees = Employee.query({limit:50});
 })
 
 .controller('EmployeeCtrl', function($scope, $resource, $stateParams, Employee) {
