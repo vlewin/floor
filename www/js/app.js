@@ -6,7 +6,7 @@
 // 'floor.controllers' is found in controllers.js
 angular.module('floor', ['ngResource', 'ionic', 'floor.controllers', 'floor.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $rootScope, $location, $state, $http) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -17,7 +17,25 @@ angular.module('floor', ['ngResource', 'ionic', 'floor.controllers', 'floor.serv
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+  })
+
+  $rootScope.server = 'http://stealth-new.suse.de:3001'
+  $rootScope.connected = false;
+  $rootScope.error_message = "No Internet connection or not in the internal SUSE network?"
+
+  $rootScope.$on('$stateChangeStart', function(e, toState, toParams, fromState, fromParams) {
+      if($rootScope.connected) {
+        return;
+      } else {
+        $http.get($rootScope.server).success(function(data, status, headers, config) {
+          $rootScope.connected = true;
+          $state.go('tab.employees');
+        }).error(function(data, status, headers, config) {
+          $state.go('tab.status');
+        });
+      }
   });
+
 })
 
 
@@ -85,6 +103,6 @@ angular.module('floor', ['ngResource', 'ionic', 'floor.controllers', 'floor.serv
     }
   });
 
-  $urlRouterProvider.otherwise('/tab/status');
+  $urlRouterProvider.otherwise('/tab/employees');
 });
 

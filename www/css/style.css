@@ -10,4 +10,18 @@
   top:137px;
 }
 
+.icon-big {
+  font-size: 260px;
+  font-weight: bold;
+  display: block;
+}
 
+.item-divider.assertive {
+  background-color: #ef473a;
+  color: #FFFFFF;
+}
+
+.item-divider.balanced {
+  background-color: #33cd5f;
+  color: #FFFFFF;
+}

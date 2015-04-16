@@ -1,9 +1,6 @@
 angular.module('floor.controllers', [])
 
 .run(function($ionicPlatform, $rootScope, $ionicScrollDelegate) {
-  $rootScope.server = 'http://stealth-new.suse.de:3001'
-  $rootScope.status = 'No network connection!';
-
   $rootScope.scrollTop = function() {
     // FIXME: scrollTo is not working with tab on-select
     // console.log("scroll top")

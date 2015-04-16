@@ -1,16 +1,17 @@
 <ion-view view-title="Status">
-  <ion-content class="padding">
-    <div class="list card">
+  <ion-content>
+    <div class="card text-center">
+      <div class="item item-divider" ng-class="{ 'balanced': connected, 'assertive': !connected }">
+        <span>{{ connected ? 'All systems go!' : 'ERROR' }}</span>
+      </div>
+      <div class="item item-text-wrap" ng-class="{ 'balanced': connected, 'assertive': !connected }">
+        <i class="icon icon-big" ng-class="{ 'ion-ios-checkmark-outline': connected, 'ion-ios-minus-outline': !connected }"></i>
 
-      <a class="item item-icon-left assertive" ng-class="{ 'balanced': status == 'OK' }" href="#">
-        <i class="icon" ng-class="{ 'ion-ios-checkmark-outline': status === 'OK', 'ion-ios-minus-outline': status !== 'OK' }"></i>
-        Status: {{ status }}
-      </a>
-
-      <a class="item" href="{{api_url}}">
-        API: {{api_url}}
-      </a>
-
+        {{ connected ? '' : error_message }}
+      </div>
+      <div class="item item-text-wrap">
+        <a class="dark" href="{{server}}">API: {{server}}</a>
+      </div>
     </div>
   </ion-content>
 </ion-view>
