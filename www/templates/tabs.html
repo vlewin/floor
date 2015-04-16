@@ -11,12 +11,12 @@ navigation history that also transitions its views in and out.
   </ion-tab>
 
   <!-- Employees Tab -->
-  <ion-tab title="Employees" icon-off="ion-person-stalker" icon-on="ion-person-stalker" href="#/tab/employees" disabled={{ !connected }}>
+  <ion-tab title="Employees" icon-off="ion-person-stalker" icon-on="ion-person-stalker" on-select="scrollTop()" href="#/tab/employees">
     <ion-nav-view name="tab-employees"></ion-nav-view>
   </ion-tab>
 
   <!-- Newcomer Tab -->
-  <ion-tab title="Newcomers" icon-off="ion-person-add" icon-on="ion-person-add" href="#/tab/newcomers" disabled={{ !connected }}>
+  <ion-tab title="Newcomers" icon-off="ion-person-add" icon-on="ion-person-add" href="#/tab/newcomers">
     <ion-nav-view name="tab-newcomers"></ion-nav-view>
   </ion-tab>
 
