@@ -29,11 +29,14 @@ angular.module('floor.controllers', [])
   $scope.search = function () {
     if($scope.searchKey) {
       $scope.employees = Employee.query({search: $scope.searchKey});
+    } else {
+      $scope.clearSearch()
     }
   }
 
   $scope.clearSearch = function () {
     $scope.searchKey = "";
+    $scope.page = 0;
     $scope.employees = []
     $scope.loadMore()
   }
