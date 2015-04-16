@@ -1,6 +1,8 @@
 angular.module('floor.controllers', [])
 
 .run(function($ionicPlatform, $rootScope) {
+  $rootScope.server = 'http://stealth-new.suse.de:3001'
+
   $ionicPlatform.ready(function() {
     setTimeout(function() {
         $rootScope.status = 'No network connection!';
@@ -34,20 +36,25 @@ angular.module('floor.controllers', [])
   $scope.doLogin = function() {
     console.log('Doing login', $scope.loginData);
 
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
+    // Simulate a login delay. Remove this and replace with your login code if using a login system
     $timeout(function() {
       $scope.closeLogin();
     }, 1000);
   };
 })
 
-.controller('EmployeesCtrl', function($scope, $resource, Employee) {
+.controller('EmployeesCtrl', function($rootScope, $scope, $resource, $http, Employee) {
   $scope.searchKey = "";
+  $scope.limit = 50;
+  $scope.page = 0;
+  $scope.total = 0;
 
-  $scope.clearSearch = function () {
-    $scope.searchKey = "";
-    $scope.employees = Employee.query({limit:50});
+  $scope.employees = []
+
+  $scope.count = function() {
+    $http.get($rootScope.server + '/count').success(function(data, status, headers, config) {
+      $scope.total = data.count;
+    })
   }
 
   $scope.search = function () {
@@ -56,7 +63,27 @@ angular.module('floor.controllers', [])
     }
   }
 
-  $scope.employees = Employee.query({limit:50});
+  $scope.clearSearch = function () {
+    $scope.searchKey = "";
+    $scope.employees = Employee.query({ page: page, limit: $scope.limit });
+  }
+
+  $scope.loadMore = function() {
+      console.log("Page: " + $scope.page)
+
+
+      Employee.query({ page: $scope.page, limit: $scope.limit}, function(employees) {
+        $scope.employees =  $scope.employees.concat(employees)
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+        $scope.page++;
+      });
+  };
+
+  $scope.isMore = function() {
+    return $scope.employees.length < $scope.total;
+  };
+
+  $scope.count()
 })
 
 .controller('EmployeeCtrl', function($scope, $resource, $stateParams, Employee) {
@@ -64,19 +91,14 @@ angular.module('floor.controllers', [])
 })
 
 
-
-
 .controller('StatusCtrl', function($rootScope, $scope, $http) {
   $scope.check = function () {
-    $http.get('http://stealth-new.suse.de:3001').success(function(data, status, headers, config) {
+    $http.get($rootScope.server).success(function(data, status, headers, config) {
       $scope.status = data['status']
       $scope.api_url = config.url
     }).error(function(data, status, headers, config) {
       $scope.api_url = config.url
     });
   }
-
-
-
   $scope.check()
 })
