@@ -59,6 +59,15 @@ angular.module('floor.controllers', [])
 })
 
 
+.controller('NewcomersCtrl', function($rootScope, $scope, $http) {
+  // $scope.employee = Employee.get({ id: $stateParams.employeeId });
+
+  $http.get($rootScope.server + '/latest').success(function(data, status, headers, config) {
+    console.log('get')
+    $scope.employees = data
+  })
+})
+
 .controller('StatusCtrl', function($rootScope, $scope, $http) {
   $scope.check = function () {
     $http.get($rootScope.server).success(function(data, status, headers, config) {

@@ -65,6 +65,16 @@ angular.module('floor', ['ngResource', 'ionic', 'floor.controllers', 'floor.serv
     }
   })
 
+  .state('tab.newcomers', {
+      url: '/newcomers',
+      views: {
+        'tab-newcomers': {
+          templateUrl: 'templates/tab-newcomers.html',
+          controller: 'NewcomersCtrl'
+        }
+      }
+    })
+
   .state('tab.settings', {
     url: '/settings',
     views: {
