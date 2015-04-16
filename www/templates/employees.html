@@ -24,10 +24,9 @@
   </div> -->
 
   <ion-content class="has-header has-subheader">
-    Showing {{ page*limit }} employees of {{ total }}
+    Showing {{ total }} employees
     <ion-list>
-      <ion-item ng-repeat="employee in employees track by $index" type="item-text-wrap" class="item-avatar" href="#/app/employees/{{employee.suseid}}">
-        {{ $index+1 }}
+      <ion-item ng-repeat="employee in employees track by $index" type="item-text-wrap" class="item-avatar" href="#/app/employees/{{employee.id}}">
         <img ng-src="{{employee.pic}}"/>
         {{employee.name}}
         <p>{{employee.title}}</p>
