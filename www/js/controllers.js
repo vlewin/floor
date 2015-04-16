@@ -33,7 +33,8 @@ angular.module('floor.controllers', [])
 
   $scope.clearSearch = function () {
     $scope.searchKey = "";
-    $scope.employees = Employee.query({ page: page, limit: $scope.limit });
+    $scope.employees = []
+    $scope.loadMore()
   }
 
   $scope.loadMore = function() {
@@ -60,8 +61,6 @@ angular.module('floor.controllers', [])
 
 
 .controller('NewcomersCtrl', function($rootScope, $scope, $http) {
-  // $scope.employee = Employee.get({ id: $stateParams.employeeId });
-
   $http.get($rootScope.server + '/latest').success(function(data, status, headers, config) {
     console.log('get')
     $scope.employees = data
