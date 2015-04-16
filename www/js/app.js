@@ -20,45 +20,71 @@ angular.module('floor', ['ngResource', 'ionic', 'floor.controllers', 'floor.serv
   });
 })
 
+
 .config(function($stateProvider, $urlRouterProvider) {
+  // Ionic uses AngularUI Router which uses the concept of states
+  // Learn more here: https://github.com/angular-ui/ui-router
+  // Set up the various states which the app can be in.
+  // Each state's controller can be found in controllers.js
   $stateProvider
 
-  .state('app', {
-    url: "/app",
+  // setup an abstract state for the tabs directive
+  .state('tab', {
+    url: "/tab",
     abstract: true,
-    templateUrl: "templates/menu.html",
-    controller: 'AppCtrl'
+    templateUrl: "templates/tabs.html"
   })
 
-  .state('app.status', {
-    url: "/status",
+  .state('tab.status', {
+    url: '/status',
     views: {
-      'menuContent': {
-        templateUrl: "templates/status.html",
+      'tab-status': {
+        templateUrl: 'templates/tab-status.html',
         controller: 'StatusCtrl'
       }
     }
   })
 
-  .state('app.employees', {
-    url: "/employees",
+  .state('tab.employees', {
+      url: '/employees',
+      views: {
+        'tab-employees': {
+          templateUrl: 'templates/tab-employees.html',
+          controller: 'EmployeesCtrl'
+        }
+      }
+    })
+
+  .state('tab.employee-detail', {
+    url: '/employees/:employeeId',
     views: {
-      'menuContent': {
-        templateUrl: "templates/employees.html",
-        controller: 'EmployeesCtrl'
+      'tab-employees': {
+        templateUrl: 'templates/employee-detail.html',
+        controller: 'EmployeeDetailCtrl'
       }
     }
   })
 
-  .state('app.single', {
-    url: "/employees/:employeeId",
+  .state('tab.newcomers', {
+      url: '/newcomers',
+      views: {
+        'tab-newcomers': {
+          templateUrl: 'templates/tab-newcomers.html',
+          controller: 'NewcomersCtrl'
+        }
+      }
+    })
+
+  .state('tab.settings', {
+    url: '/settings',
     views: {
-      'menuContent': {
-        templateUrl: "templates/employee.html",
-        controller: 'EmployeeCtrl'
+      'tab-settings': {
+        templateUrl: 'templates/tab-settings.html',
+        controller: 'SettingsCtrl'
       }
     }
   });
 
-  $urlRouterProvider.otherwise('/app/employees');
+  $urlRouterProvider.otherwise('/tab/status');
 });
+

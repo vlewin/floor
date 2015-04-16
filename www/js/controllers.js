@@ -1,47 +1,16 @@
 angular.module('floor.controllers', [])
 
-.run(function($ionicPlatform, $rootScope) {
+.run(function($ionicPlatform, $rootScope, $ionicScrollDelegate) {
   $rootScope.server = 'http://stealth-new.suse.de:3001'
+  $rootScope.status = 'No network connection!';
 
-  $ionicPlatform.ready(function() {
-    setTimeout(function() {
-        $rootScope.status = 'No network connection!';
-    }, 100);
- });
-})
-
-
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
-  // Form data for the login modal
-  $scope.loginData = {};
-
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
+  $rootScope.scrollTop = function() {
+    // FIXME: scrollTo is not working with tab on-select
+    // console.log("scroll top")
+    $ionicScrollDelegate.scrollTop(true)
   };
 })
+
 
 .controller('EmployeesCtrl', function($rootScope, $scope, $resource, $http, Employee) {
   $scope.searchKey = "";
@@ -65,12 +34,12 @@ angular.module('floor.controllers', [])
 
   $scope.clearSearch = function () {
     $scope.searchKey = "";
-    $scope.employees = Employee.query({ page: page, limit: $scope.limit });
+    $scope.employees = []
+    $scope.loadMore()
   }
 
   $scope.loadMore = function() {
       console.log("Page: " + $scope.page)
-
 
       Employee.query({ page: $scope.page, limit: $scope.limit}, function(employees) {
         $scope.employees =  $scope.employees.concat(employees)
@@ -86,10 +55,18 @@ angular.module('floor.controllers', [])
   $scope.count()
 })
 
-.controller('EmployeeCtrl', function($scope, $resource, $stateParams, Employee) {
+
+.controller('EmployeeDetailCtrl', function($scope, $resource, $stateParams, Employee) {
   $scope.employee = Employee.get({ id: $stateParams.employeeId });
 })
 
+
+.controller('NewcomersCtrl', function($rootScope, $scope, $http) {
+  $http.get($rootScope.server + '/latest').success(function(data, status, headers, config) {
+    console.log('get')
+    $scope.employees = data
+  })
+})
 
 .controller('StatusCtrl', function($rootScope, $scope, $http) {
   $scope.check = function () {
@@ -102,3 +79,8 @@ angular.module('floor.controllers', [])
   }
   $scope.check()
 })
+
+
+.controller('SettingsCtrl', function($rootScope) {
+})
+

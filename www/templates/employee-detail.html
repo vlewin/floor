@@ -1,0 +1,23 @@
+<ion-view view-title="{{employee.name}}">
+  <ion-content class="padding">
+    <div class="list card">
+        <a class="item item-thumbnail-left" href="#">
+          <img ng-src="{{employee.pic}}">
+          <div class="padding-vertical">
+            <h2>{{employee.name}}</h2>
+            <p>{{employee.title}}</p>
+            <p>{{employee.location}}</p>
+          </div>
+        </a>
+
+        <div class="item item-divider">Contact information</div>
+        <a class="item item-icon-left" href="tel:{{employee.phone}}"><i class="icon ion-ios-telephone"></i>Call office<p>{{employee.phone}}</p></a>
+        <a class="item item-icon-left" href="tel:{{employee.mobile}}"><i class="icon ion-iphone"></i>Call cell<p>{{employee.mobile}}</p></a>
+        <a class="item item-icon-left" href="mailto:{{employee.email}}"><i class="icon ion-email"></i>Email<p>{{employee.email}}</p></a>
+
+        <div class="item item-divider">Location information</div>
+        <a class="item item-icon-left" href="#"><i class="icon ion-ios-location"></i>Location<p>{{employee.location}}</p></a>
+        <a class="item item-icon-left" href="{{employee.link}}" target="_blank"><i class="icon ion-ios-information"></i>Room<p>{{employee.room}}</p></a>
+    </div>
+  </ion-content>
+</ion-view>
