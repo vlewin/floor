@@ -1,2 +1,13 @@
 /* Empty. Add your own CSS if you like */
 
+/* Hotfix for Sub Header not showing on Android with Tabs
+   http://forum.ionicframework.com/t/sub-header-not-showing-on-android-with-tabs/15341/13 */
+.platform-android .bar-subheader {
+  top:93px;
+}
+
+.platform-android .has-subheader {
+  top:137px;
+}
+
+
