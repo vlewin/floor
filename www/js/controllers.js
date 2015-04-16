@@ -45,7 +45,7 @@ angular.module('floor.controllers', [])
 
 .controller('EmployeesCtrl', function($rootScope, $scope, $resource, $http, Employee) {
   $scope.searchKey = "";
-  $scope.limit = 50;
+  $scope.limit = 100;
   $scope.page = 0;
   $scope.total = 0;
 
