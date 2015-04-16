@@ -1,0 +1,26 @@
+ <ion-view view-title="Employees">
+    <div class="bar bar-subheader item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input id="searchKey" type="search" placeholder="Search" ng-model="searchKey" ng-change="search()" ng-focus="scrollTop()" autocorrect="off" />
+      </label>
+
+      <button class="button button-clear" ng-if="searchKey.length" ng-click="clearSearch()">
+        <i class="ion-backspace-outline" ng-if="searchKey.length" ng-click="clearSearch()"></i>
+      </button>
+    </div>
+
+    <ion-content class="has-header has-subheader">
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="employee in employees track by $index" type="item-text-wrap" href="#/tab/employees/{{employee.suseid}}">
+      <!-- <ion-item ng-repeat="employee in employees track by $index" type="item-text-wrap" class="item-avatar" href="#/app/employees/{{employee.suseid}}"> -->
+        {{ $index+1 }}
+        <img ng-src="{{employee.pic}}"/>
+        {{employee.name}}
+        <p>{{employee.title}}</p>
+      </ion-item>
+    </ion-list>
+
+    <ion-infinite-scroll ng-if="isMore()" on-infinite="loadMore()" distance="5%"></ion-infinite-scroll>
+  </ion-content>
+</ion-view>
+
