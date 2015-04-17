@@ -4,24 +4,23 @@ Each tab's child <ion-nav-view> directive will have its own
 navigation history that also transitions its views in and out.
 -->
 <ion-tabs class="tabs-icon-top tabs-color-active-positive">
-
   <!-- Status Tab -->
-  <ion-tab title="Status" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/status">
+  <ion-tab title="Status" hidden={{connected}} icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/status">
     <ion-nav-view name="tab-status"></ion-nav-view>
   </ion-tab>
 
   <!-- Employees Tab -->
-  <ion-tab title="Employees" icon-off="ion-person-stalker" icon-on="ion-person-stalker" on-select="scrollTop()" href="#/tab/employees">
+  <ion-tab title="Employees" hidden={{!connected}} icon-off="ion-person-stalker" icon-on="ion-person-stalker" on-select="scrollTop()" href="#/tab/employees">
     <ion-nav-view name="tab-employees"></ion-nav-view>
   </ion-tab>
 
   <!-- Newcomer Tab -->
-  <ion-tab title="Newcomers" icon-off="ion-person-add" icon-on="ion-person-add" href="#/tab/newcomers">
+  <ion-tab title="Newcomers" hidden={{!connected}} icon-off="ion-person-add" icon-on="ion-person-add" href="#/tab/newcomers">
     <ion-nav-view name="tab-newcomers"></ion-nav-view>
   </ion-tab>
 
   <!-- Settings Tab -->
-  <ion-tab title="Settings" icon-off="ion-ios-gear" icon-on="ion-ios-gear" href="#/tab/settings">
+  <ion-tab title="Settings" hidden={{!connected}} icon-off="ion-ios-gear" icon-on="ion-ios-gear" href="#/tab/settings">
     <ion-nav-view name="tab-settings"></ion-nav-view>
   </ion-tab>
 

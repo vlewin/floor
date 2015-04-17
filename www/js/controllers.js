@@ -18,7 +18,7 @@ angular.module('floor.controllers', [])
   $scope.employees = []
 
   $scope.count = function() {
-    $http.get($rootScope.server + '/count').success(function(data, status, headers, config) {
+    $http.get($rootScope.server + '/employees/count').success(function(data, status, headers, config) {
       $scope.total = data.count;
     })
   }
@@ -62,7 +62,7 @@ angular.module('floor.controllers', [])
 
 
 .controller('NewcomersCtrl', function($rootScope, $scope, $http) {
-  $http.get($rootScope.server + '/latest').success(function(data, status, headers, config) {
+  $http.get($rootScope.server + '/employees/latest').success(function(data, status, headers, config) {
     console.log('get')
     $scope.employees = data
   })
