@@ -26,6 +26,7 @@ angular.module('floor.controllers', [])
   $scope.search = function () {
     if($scope.searchKey) {
       $scope.employees = Employee.query({search: $scope.searchKey});
+      $scope.$emit('scroll.infiniteScrollComplete');
     } else {
       $scope.clearSearch()
     }
@@ -43,8 +44,10 @@ angular.module('floor.controllers', [])
 
       Employee.query({ page: $scope.page, limit: $scope.limit}, function(employees) {
         $scope.employees =  $scope.employees.concat(employees)
-        $scope.$broadcast('scroll.infiniteScrollComplete');
         $scope.page++;
+
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+        $scope.$emit('scroll.infiniteScrollComplete');
       });
   };
 
@@ -57,13 +60,17 @@ angular.module('floor.controllers', [])
 
 
 .controller('EmployeeDetailCtrl', function($scope, $resource, $stateParams, Employee) {
-  $scope.employee = Employee.get({ id: $stateParams.employeeId });
-})
+  Employee.get({ id: $stateParams.employeeId }, function(employee) {
+    $scope.employee = employee;
 
+    $scope.$broadcast('scroll.infiniteScrollComplete');
+    $scope.$emit('scroll.infiniteScrollComplete');
+  });
+
+})
 
 .controller('NewcomersCtrl', function($rootScope, $scope, $http) {
   $http.get($rootScope.server + '/employees/latest').success(function(data, status, headers, config) {
-    console.log('get')
     $scope.employees = data
   })
 })
