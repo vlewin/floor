@@ -70,15 +70,18 @@ angular.module('floor.controllers', [])
 })
 
 .controller('StatusCtrl', function($rootScope, $scope, $http) {
-  $scope.check = function () {
+  $scope.checkStatus = function () {
     $http.get($rootScope.server).success(function(data, status, headers, config) {
-      $scope.status = data['status']
+      $rootScope.connected = true;
       $scope.api_url = config.url
     }).error(function(data, status, headers, config) {
       $scope.api_url = config.url
+    }).finally(function() {
+      $scope.$broadcast('scroll.refreshComplete');
     });
   }
-  $scope.check()
+
+  $scope.checkStatus()
 })
 
 
