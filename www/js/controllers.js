@@ -9,7 +9,7 @@ angular.module('floor.controllers', [])
 })
 
 
-.controller('EmployeesCtrl', function($rootScope, $scope, $resource, $http, Employee) {
+.controller('EmployeesCtrl', function($rootScope, $scope, $resource, $http, $timeout, Employee) {
   $scope.searchKey = "";
   $scope.limit = 100;
   $scope.page = 0;
@@ -26,7 +26,6 @@ angular.module('floor.controllers', [])
   $scope.search = function () {
     if($scope.searchKey) {
       $scope.employees = Employee.query({search: $scope.searchKey});
-      $scope.$emit('scroll.infiniteScrollComplete');
     } else {
       $scope.clearSearch()
     }
@@ -40,19 +39,16 @@ angular.module('floor.controllers', [])
   }
 
   $scope.loadMore = function() {
-      console.log("Page: " + $scope.page)
-
       Employee.query({ page: $scope.page, limit: $scope.limit}, function(employees) {
         $scope.employees =  $scope.employees.concat(employees)
         $scope.page++;
 
         $scope.$broadcast('scroll.infiniteScrollComplete');
-        $scope.$emit('scroll.infiniteScrollComplete');
       });
   };
 
   $scope.isMore = function() {
-    return $scope.employees.length < $scope.total;
+    return (!$scope.searchKey && $scope.employees.length < $scope.total)
   };
 
   $scope.count()
@@ -62,12 +58,10 @@ angular.module('floor.controllers', [])
 .controller('EmployeeDetailCtrl', function($scope, $resource, $stateParams, Employee) {
   Employee.get({ id: $stateParams.employeeId }, function(employee) {
     $scope.employee = employee;
-
-    $scope.$broadcast('scroll.infiniteScrollComplete');
-    $scope.$emit('scroll.infiniteScrollComplete');
+    $scope.manager = Employee.get({ id: $scope.employee.managerid })
   });
-
 })
+
 
 .controller('NewcomersCtrl', function($rootScope, $scope, $http) {
   $http.get($rootScope.server + '/employees/latest').success(function(data, status, headers, config) {

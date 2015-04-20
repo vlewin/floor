@@ -5,7 +5,7 @@
           <img ng-src="{{employee.pic}}">
           <div class="padding-vertical">
             <h2>{{employee.name}}</h2>
-            <p>{{employee.title}}</p>
+            <p>{{employee.title}} ({{employee.department}})</p>
             <p>{{employee.location}}</p>
           </div>
         </a>
@@ -18,6 +18,17 @@
         <div class="item item-divider">Location information</div>
         <a class="item item-icon-left" href="#"><i class="icon ion-ios-location"></i>Location<p>{{employee.location}}</p></a>
         <a class="item item-icon-left" href="{{employee.link}}" target="_blank"><i class="icon ion-ios-information"></i>Room<p>{{employee.room}}</p></a>
+
+        <div class="item item-divider">Manager information</div>
+        <a class="item item-thumbnail-left" href="#/tab/employees/{{manager.id}}">
+          <img ng-src="{{manager.pic}}">
+          <div class="padding-vertical">
+            <h2>{{manager.name}}</h2>
+            <p>{{manager.title}} ({{manager.department}})</p>
+            <p>{{manager.location}}</p>
+          </div>
+        </a>
+
     </div>
   </ion-content>
 </ion-view>
