@@ -28,8 +28,10 @@ angular.module('floor', ['ngResource', 'ionic', 'floor.controllers', 'floor.serv
         return;
       } else {
         $http.get($rootScope.server).success(function(data, status, headers, config) {
-          $rootScope.connected = true;
-          $state.go('tab.employees');
+          if(!$rootScope.connected) {
+            $state.go('tab.employees');
+            $rootScope.connected = true;
+          }
         }).error(function(data, status, headers, config) {
           $state.go('tab.status');
         });
@@ -82,6 +84,22 @@ angular.module('floor', ['ngResource', 'ionic', 'floor.controllers', 'floor.serv
       }
     }
   })
+
+  .state('tab.team', {
+    url: '/employees/:employeeId/team',
+    views: {
+      'tab-employees': {
+        templateUrl: 'templates/team.html',
+        controller: 'TeamMembersCtrl'
+      }
+    }
+  })
+
+  // .state('tab.reports', {
+  //     url: '/employees/:employeeId/reports',
+  //     templateUrl: 'templates/employee-reports.html',
+  //     controller: 'EmployeeReportsCtrl'
+  // });
 
   .state('tab.newcomers', {
       url: '/newcomers',

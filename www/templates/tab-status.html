@@ -7,7 +7,7 @@
         <span>{{ connected ? 'All systems go!' : 'ERROR' }}</span>
       </div>
       <div class="item item-text-wrap" ng-class="{ 'balanced': connected, 'assertive': !connected }">
-        <i class="icon icon-big" ng-class="{ 'ion-ios-checkmark-outline': connected, 'ion-ios-minus-outline': !connected }"></i>
+        <i class="icon icon-big" ng-class="{ 'ion-android-checkmark-circle': connected, 'ion-ios-minus-outline': !connected }"></i>
 
         {{ connected ? '' : error_message }}
       </div>

@@ -1,0 +1,10 @@
+ <ion-view view-title="Team members">
+    <ion-content>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="employee in employees track by $index" type="item-text-wrap" href="#/tab/employees/{{employee.id}}">
+        <img ng-src="{{employee.pic}}"/>
+        {{employee.name}}
+        <p>{{employee.title}}</p>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

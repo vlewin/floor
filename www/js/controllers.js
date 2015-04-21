@@ -63,6 +63,12 @@ angular.module('floor.controllers', [])
 })
 
 
+.controller('TeamMembersCtrl', function($rootScope, $scope, $http, $stateParams) {
+  $http.get($rootScope.server + '/employees/' + $stateParams.employeeId + '/team').success(function(data, status, headers, config) {
+    $scope.employees = data
+  })
+})
+
 .controller('NewcomersCtrl', function($rootScope, $scope, $http) {
   $http.get($rootScope.server + '/employees/latest').success(function(data, status, headers, config) {
     $scope.employees = data
