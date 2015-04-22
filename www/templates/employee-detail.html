@@ -10,16 +10,26 @@
         </div>
       </a>
 
-      <div class="item item-divider">Contact information</div>
-      <a class="item item-icon-left" href="tel:{{employee.phone}}"><i class="icon ion-ios-telephone"></i>Call office<p>{{employee.phone}}</p></a>
-      <a class="item item-icon-left" href="tel:{{employee.mobile}}"><i class="icon ion-iphone"></i>Call cell<p>{{employee.mobile}}</p></a>
-      <a class="item item-icon-left" href="mailto:{{employee.email}}"><i class="icon ion-email"></i>Email<p>{{employee.email}}</p></a>
+      <div class="item item-divider">Contact Information</div>
+      <a class="item item-icon-left" ng-if=employee.phone href="tel:{{employee.phone}}">
+        <i class="icon ion-ios-telephone"></i>Call Office<p>{{employee.phone}}</p>
+      </a>
+      <a class="item item-icon-left" ng-if=employee.mobile href="tel:{{employee.mobile}}">
+        <i class="icon ion-iphone"></i>Call Cell<p>{{employee.mobile}}</p>
+      </a>
+      <a class="item item-icon-left" href="mailto:{{employee.email}}">
+        <i class="icon ion-email"></i>Email<p>{{employee.email}}</p>
+      </a>
 
-      <div class="item item-divider">Location information</div>
-      <a class="item item-icon-left" href="#"><i class="icon ion-ios-location"></i>Location<p>{{employee.location}}</p></a>
-      <a class="item item-icon-left" href="{{employee.link}}" target="_blank"><i class="icon ion-ios-information"></i>Room<p>{{employee.room}}</p></a>
+      <div class="item item-divider">Location Information</div>
+      <a class="item item-icon-left" href="#">
+        <i class="icon ion-ios-location"></i>Location<p>{{employee.location}}</p>
+      </a>
+      <a class="item item-icon-left" href="{{employee.link}}" target="_blank">
+        <i class="icon ion-ios-information"></i>Room<p>{{employee.room}}</p>
+      </a>
 
-      <div class="item item-divider">Manager information</div>
+      <div class="item item-divider">Manager Information</div>
       <a class="item item-thumbnail-left" href="#/tab/employees/{{manager.id}}">
         <img ng-src="{{manager.pic}}">
         <div class="padding-vertical">
@@ -31,13 +41,14 @@
 
       <a class="item item-icon-left" href="#/tab/employees/{{employee.manager ? employee.id : manager.id}}/team">
         <i class="icon ion-person-stalker"></i>
-        {{ employee.manager ? 'Subordinate employees' : 'Team members' }}
+        {{ employee.manager ? 'Subordinate Employees' : 'Team Members' }}
       </a>
 
       <a class="item item-icon-left" ng-if=employee.manager href="#/tab/employees/{{manager.id}}/team">
         <i class="icon ion-person-stalker"></i>
         Peers
       </a>
+
     </div>
   </ion-content>
 </ion-view>
