@@ -6,10 +6,20 @@ angular.module('floor.controllers', [])
     // console.log("scroll top")
     $ionicScrollDelegate.scrollTop(true)
   };
+
+  $rootScope.showBack = function() {
+    console.log("Show back")
+    angular.element(document.querySelector('.back-button.hide')).removeClass('hide')
+  };
+
+  $rootScope.hideBack = function() {
+    console.log("Hide back")
+    angular.element(document.querySelector('.back-button.hide')).addClass('hide')
+  };
 })
 
 
-.controller('EmployeesCtrl', function($rootScope, $scope, $resource, $http, $timeout, Employee) {
+.controller('EmployeesCtrl', function($rootScope, $scope, $resource, $interval, $http, $timeout, Employee) {
   $scope.searchKey = "";
   $scope.limit = 50;
   $scope.page = 0;
@@ -24,8 +34,14 @@ angular.module('floor.controllers', [])
   }
 
   $scope.search = function () {
+    if($scope.timeout) {
+      clearTimeout($scope.timeout);
+    }
+
     if($scope.searchKey) {
-      $scope.employees = Employee.query({search: $scope.searchKey});
+      $scope.timeout = setTimeout(function() {
+        $scope.employees = Employee.query({search: $scope.searchKey});
+      }, 300);
     } else {
       $scope.clearSearch()
     }
@@ -58,7 +74,8 @@ angular.module('floor.controllers', [])
 .controller('EmployeeDetailCtrl', function($scope, $resource, $stateParams, Employee) {
   Employee.get({ id: $stateParams.employeeId }, function(employee) {
     $scope.employee = employee;
-    $scope.manager = Employee.get({ id: $scope.employee.managerid })
+    $scope.manager = Employee.get({ id: $scope.employee.managerid }, function() {
+    })
   });
 })
 
@@ -71,7 +88,13 @@ angular.module('floor.controllers', [])
 })
 
 .controller('NewcomersCtrl', function($rootScope, $scope, $http) {
-  $http.get($rootScope.server + '/employees/latest').success(function(data, status, headers, config) {
+  $http.get($rootScope.server + '/employees/newcomers').success(function(data, status, headers, config) {
+    $scope.employees = data
+  })
+})
+
+.controller('ApprenticesCtrl', function($rootScope, $scope, $http) {
+  $http.get($rootScope.server + '/employees/apprentices').success(function(data, status, headers, config) {
     $scope.employees = data
   })
 })

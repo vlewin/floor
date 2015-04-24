@@ -29,28 +29,20 @@ angular.module('floor', ['ngResource', 'ionic', 'floor.controllers', 'floor.serv
       } else {
         $http.get($rootScope.server).success(function(data, status, headers, config) {
           if(!$rootScope.connected) {
-            $state.go('tab.employees');
             $rootScope.connected = true;
+            $state.go('tab.employees');
           }
         }).error(function(data, status, headers, config) {
           $state.go('tab.status');
         });
       }
   });
-
 })
 
 
 .config(function($stateProvider, $urlRouterProvider) {
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
-  $stateProvider
-
-  // setup an abstract state for the tabs directive
-  .state('tab', {
-    url: "/tab",
+  $stateProvider.state('tab', {
+    url: '/tab',
     abstract: true,
     templateUrl: "templates/tabs.html"
   })
@@ -73,7 +65,7 @@ angular.module('floor', ['ngResource', 'ionic', 'floor.controllers', 'floor.serv
           controller: 'EmployeesCtrl'
         }
       }
-    })
+  })
 
   .state('tab.employee-detail', {
     url: '/employees/:employeeId',
@@ -95,31 +87,45 @@ angular.module('floor', ['ngResource', 'ionic', 'floor.controllers', 'floor.serv
     }
   })
 
-  // .state('tab.reports', {
-  //     url: '/employees/:employeeId/reports',
-  //     templateUrl: 'templates/employee-reports.html',
-  //     controller: 'EmployeeReportsCtrl'
-  // });
-
   .state('tab.newcomers', {
-      url: '/newcomers',
-      views: {
-        'tab-newcomers': {
-          templateUrl: 'templates/tab-newcomers.html',
-          controller: 'NewcomersCtrl'
-        }
-      }
-    })
-
-  .state('tab.settings', {
-    url: '/settings',
+    url: '/newcomers',
     views: {
-      'tab-settings': {
-        templateUrl: 'templates/tab-settings.html',
-        controller: 'SettingsCtrl'
+      'tab-newcomers': {
+        templateUrl: 'templates/tab-newcomers.html',
+        controller: 'NewcomersCtrl'
       }
     }
-  });
+  })
+
+  .state('tab.newcomer-detail', {
+    url: '/newcomers/:employeeId',
+    views: {
+      'tab-newcomers': {
+        templateUrl: 'templates/employee-detail.html',
+        controller: 'EmployeeDetailCtrl'
+      }
+    }
+  })
+
+  .state('tab.apprentices', {
+    url: '/apprentices',
+    views: {
+      'tab-apprentices': {
+        templateUrl: 'templates/tab-apprentices.html',
+        controller: 'ApprenticesCtrl'
+      }
+    }
+  })
+
+  .state('tab.apprentices-detail', {
+    url: '/apprentices/:employeeId',
+    views: {
+      'tab-apprentices': {
+        templateUrl: 'templates/employee-detail.html',
+        controller: 'EmployeeDetailCtrl'
+      }
+    }
+  })
 
   $urlRouterProvider.otherwise('/tab/employees');
 });

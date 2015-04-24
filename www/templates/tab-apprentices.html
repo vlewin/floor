@@ -1,0 +1,10 @@
+<ion-view view-title="Apprentices">
+  <ion-content>
+    <ion-item class="item-avatar item-icon-right" ng-repeat="employee in employees" href="#/tab/apprentices/{{employee.id}}">
+      <img ng-src="{{employee.pic}}"/>
+      {{employee.name}}
+      <p>{{employee.title}}</p>
+    </ion-item>
+  </ion-content>
+</ion-view>
+
