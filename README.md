@@ -1,5 +1,5 @@
 # staff
 SUSE Employee Directory (staff.suse.de)
 
-
-`sudo ionic serve -p 80`
+run `sudo npm install ionic -g` to install Ionic framework
+run `sudo ionic serve -p 80` to start a UI server
