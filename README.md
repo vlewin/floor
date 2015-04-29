@@ -1,5 +1,5 @@
-# floor
-SUSE Employee Directory Application with Ionic + Node.js (LDAP json API)
+# staff
+SUSE Employee Directory (staff.suse.de)
 
 
-`ionic serve --lab -p 8001`
+`sudo ionic serve -p 80`
