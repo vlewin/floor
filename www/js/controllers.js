@@ -1,4 +1,4 @@
-angular.module('floor.controllers', [])
+angular.module('staff.controllers', [])
 
 .run(function($ionicPlatform, $rootScope, $ionicScrollDelegate) {
   $rootScope.scrollTop = function() {

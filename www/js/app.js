@@ -1,10 +1,4 @@
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'floor' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'floor.controllers' is found in controllers.js
-angular.module('floor', ['ngResource', 'ionic', 'floor.controllers', 'floor.services'])
+angular.module('staff', ['ngResource', 'ionic', 'staff.controllers', 'staff.services'])
 
 .run(function($ionicPlatform, $rootScope, $location, $state, $http) {
   $ionicPlatform.ready(function() {
