@@ -1,6 +1,6 @@
-angular.module('staff', ['ngResource', 'ionic', 'staff.controllers', 'staff.services'])
+angular.module('staff', ['ionic', 'ngResource', 'staff.controllers', 'staff.services'])
 
-.run(function($ionicPlatform, $rootScope, $location, $state, $http) {
+.run(function($ionicPlatform, $rootScope, $localStorage, $location, $state, $http, $ionicLoading, APIService) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -13,26 +13,28 @@ angular.module('staff', ['ngResource', 'ionic', 'staff.controllers', 'staff.serv
     }
   })
 
-  $rootScope.server = 'http://stealth-new.suse.de:3001'
-  $rootScope.connected = false;
+  $rootScope.server = $localStorage.get('server') || 'http://stealth-new.suse.de:3001'
+  $rootScope.connected = $rootScope.connected || false;
   $rootScope.error_message = "No Internet connection or not in the internal SUSE network?"
 
   $rootScope.$on('$stateChangeStart', function(e, toState, toParams, fromState, fromParams) {
-      if($rootScope.connected) {
-        return;
-      } else {
-        $http.get($rootScope.server).success(function(data, status, headers, config) {
-          if(!$rootScope.connected) {
-            $rootScope.connected = true;
-            $state.go('tab.employees');
-          }
-        }).error(function(data, status, headers, config) {
-          $state.go('tab.status');
-        });
-      }
+    if($rootScope.connected) {
+      return;
+    } else {
+      console.log("Offline")
+      // FIXME: use APIService.status() see SettingsCtrl
+      $http.get($rootScope.server).success(function(data, status, headers, config) {
+        if(!$rootScope.connected) {
+          console.log("Not connected")
+          $rootScope.connected = true;
+        }
+      }).error(function(data, status, headers, config) {
+        $ionicLoading.hide()
+        $state.go('tab.status');
+      });
+    }
   });
 })
-
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider.state('tab', {
@@ -117,6 +119,16 @@ angular.module('staff', ['ngResource', 'ionic', 'staff.controllers', 'staff.serv
       'tab-apprentices': {
         templateUrl: 'templates/employee-detail.html',
         controller: 'EmployeeDetailCtrl'
+      }
+    }
+  })
+
+  .state('tab.settings', {
+    url: '/settings',
+    views: {
+      'tab-settings': {
+        templateUrl: 'templates/tab-settings.html',
+        controller: 'SettingsCtrl'
       }
     }
   })

@@ -1,15 +1,13 @@
 <ion-view view-title="{{employee.name}}">
   <ion-content class="">
-    <div class="list card">
-      <ion-list>
-          <ion-item class="item item-text-wrap" ng-class="{'item-thumbnail-left' : employee.id == id, 'item-avatar':  employee.id !== id }" ng-repeat="employee in employees track by $index" href="#/tab/employees/{{employee.id}}">
-            <img ng-src="{{employee.pic}}"/>
-            <h2>{{employee.name}}</h2>
-            <p>{{employee.title}}</p>
-            <p ng-if="employee.id == id">Reporting manager</p>
-          </ion-item>
-      </ion-list>
-    </div>
+    <ion-list>
+        <ion-item class="item item-text-wrap" ng-class="{'item-thumbnail-left' : employee.id == id, 'item-avatar':  employee.id !== id }" ng-repeat="employee in employees track by $index" href="#/tab/employees/{{employee.id}}">
+          <img ng-src="{{employee.pic}}"/>
+          <h2>{{employee.name}}</h2>
+          <p>{{employee.title}}</p>
+          <p ng-if="employee.id == id">Reporting manager</p>
+        </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>
 

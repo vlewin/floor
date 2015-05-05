@@ -87,34 +87,54 @@ angular.module('staff.controllers', [])
   })
 })
 
-.controller('NewcomersCtrl', function($rootScope, $scope, $http) {
+.controller('NewcomersCtrl', function($rootScope, $scope, $http, $ionicLoading) {
+  $ionicLoading.show({
+    template: '<ion-spinner icon="lines"></ion-spinner>',
+    hideOnStageChange: false
+  });
+
   $http.get($rootScope.server + '/employees/newcomers').success(function(data, status, headers, config) {
     $scope.employees = data
+    $ionicLoading.hide();
   })
 })
 
-.controller('ApprenticesCtrl', function($rootScope, $scope, $http) {
+.controller('ApprenticesCtrl', function($rootScope, $scope, $http, $ionicLoading) {
+  $ionicLoading.show({
+    template: '<ion-spinner icon="lines"></ion-spinner>',
+    hideOnStageChange: true
+  });
+
   $http.get($rootScope.server + '/employees/apprentices').success(function(data, status, headers, config) {
     $scope.employees = data
+    $ionicLoading.hide();
   })
 })
 
-.controller('StatusCtrl', function($rootScope, $scope, $http) {
+.controller('StatusCtrl', function($rootScope, $scope, $http, APIService) {
   $scope.checkStatus = function () {
-    $http.get($rootScope.server).success(function(data, status, headers, config) {
-      $rootScope.connected = true;
-      $scope.api_url = config.url
-    }).error(function(data, status, headers, config) {
-      $scope.api_url = config.url
-    }).finally(function() {
-      $scope.$broadcast('scroll.refreshComplete');
+    APIService.status()
+  }
+})
+
+.controller('SettingsCtrl', function($rootScope, $scope, $localStorage, APIService) {
+  $scope.api_url = $rootScope.server;
+  $scope.error = null;
+
+  $scope.validate = function() {
+    APIService.status($scope.api_url).finally(function() {
+      if($rootScope.connected) {
+        $scope.error = null;
+        $scope.save()
+      } else {
+        $scope.error = { 'message': 'API server is offline or incorrect URL' }
+      }
     });
   }
 
-  $scope.checkStatus()
-})
-
-
-.controller('SettingsCtrl', function($rootScope) {
+  $scope.save = function() {
+    $rootScope.server = $scope.api_url;
+    $localStorage.set('server', $scope.api_url);
+  }
 })
 

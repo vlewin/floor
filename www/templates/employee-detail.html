@@ -1,14 +1,14 @@
 <ion-view view-title="{{employee.name}}">
-  <ion-content class="padding">
-    <div class="list card">
-      <a class="item item-thumbnail-left" href="#">
+  <ion-content>
+    <ion-list>
+      <ion-item class="item-thumbnail-left" href="#">
         <img ng-src="{{employee.pic}}">
         <div class="padding-vertical">
           <h2>{{employee.name}}</h2>
           <p>{{employee.title}}</p>
           <p>{{employee.department}}</p>
         </div>
-      </a>
+      </ion-item>
 
       <div class="item item-divider">Contact Information</div>
       <a class="item item-icon-left" ng-if=employee.phone href="tel:{{employee.phone}}">
@@ -49,6 +49,6 @@
         Peers
       </a>
 
-    </div>
+    </ion-list>
   </ion-content>
 </ion-view>
