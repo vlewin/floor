@@ -3,6 +3,8 @@
   "app_id": "2180fc00",
   "gulpStartupTasks": [
     "templatecache",
+    "js",
+    "css",
     "watch"
   ]
 }

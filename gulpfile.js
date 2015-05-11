@@ -29,13 +29,6 @@ gulp.task('sass', function(done) {
     .on('end', done);
 });
 
-gulp.task('templatecache', function (done) {
-  gulp.src('./www/templates/**/*.html')
-    .pipe(templateCache({standalone:true}))
-    .pipe(gulp.dest('./www/js'))
-    .on('end', done);
-});
-
 gulp.task('css', function(done) {
   var source = [
     "./www/lib/ionic/css/ionic.css",
@@ -51,10 +44,32 @@ gulp.task('css', function(done) {
   .on('end', done);
 });
 
+gulp.task('templatecache', function (done) {
+  gulp.src('./www/templates/**/*.html')
+    .pipe(templateCache({standalone:true}))
+    .pipe(gulp.dest('./www/js'))
+    .on('end', done);
+});
+
+gulp.task('js', function(done) {
+  var source =  [
+    "./www/lib/ionic/js/ionic.bundle.min.js",
+    "./www/lib/ionic/js/angular/angular-resource.min.js",
+    './www/js/*.js'
+  ]
+
+  gulp.src(source)
+  .pipe(concat('source.min.js'))
+  .pipe(gulp.dest('./www/dist/'))
+  .on('end', done);
+});
+
+
 gulp.task('watch', function() {
   // gulp.watch(paths.sass, ['sass']);
   gulp.watch(paths.css, ['css']);
   gulp.watch(paths.templatecache, ['templatecache']);
+  gulp.watch(paths.js, ['js']);
 });
 
 gulp.task('install', ['git-check'], function() {
