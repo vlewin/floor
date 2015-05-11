@@ -1,22 +1,18 @@
 <ion-tabs class="tabs-icon-top tabs-color-active-balanced">
-  <ion-tab title="Status" hidden={{connected}} icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/status">
+  <ion-tab title="Status" ng-if="!connected" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/status">
     <ion-nav-view name="tab-status"></ion-nav-view>
   </ion-tab>
 
-  <ion-tab title="Employees" icon="ion-ios-people" on-select="scrollTop()" href="#/tab/employees">
+  <ion-tab title="Employees" ng-if="connected" icon="ion-ios-people" on-select="scrollTop()" href="#/tab/employees">
     <ion-nav-view name="tab-employees"></ion-nav-view>
   </ion-tab>
 
-  <ion-tab title="Newcomers" icon="ion-person-stalker" href="#/tab/newcomers">
+  <ion-tab title="Newcomers" ng-if="connected" icon="ion-person-stalker" href="#/tab/newcomers">
     <ion-nav-view name="tab-newcomers"></ion-nav-view>
   </ion-tab>
 
-  <ion-tab title="Apprentices" icon="ion-person-stalker" href="#/tab/apprentices">
+  <ion-tab title="Apprentices" ng-if="connected" icon="ion-person-stalker" href="#/tab/apprentices">
     <ion-nav-view name="tab-apprentices"></ion-nav-view>
-  </ion-tab>
-
-  <ion-tab title="Settings" icon="ion-ios-cog" href="#/tab/settings">
-    <ion-nav-view name="tab-settings"></ion-nav-view>
   </ion-tab>
 </ion-tabs>
 

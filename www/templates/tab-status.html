@@ -10,9 +10,22 @@
 
         {{ connected ? '' : error_message }}
       </div>
-      <div class="item item-text-wrap">
+
+      <div class="item item-text-wrap" ng-if="connected">
         <a class="dark" href="{{server}}">API: {{server}}</a>
       </div>
+
+      <div class="list list-inset">
+        <label class="item item-input item-label" ng-class="{ 'has-error': error }">
+          <span class="input-label">API server URL</span>
+          <input type="text" placeholder="http://example.com" ng-model="$parent.server_url">
+        </label>
+        <div class="form-error" ng-if="error">{{ error.message }}</div>
+        <div class="padding">
+          <button class="button button-block button-dark" ng-click="validate()">Validate and Save</button>
+        </div>
+      </div>
+
     </div>
   </ion-content>
 </ion-view>

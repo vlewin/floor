@@ -6,7 +6,7 @@ module.service('APIService', function($rootScope, $http, $q) {
 
   return {
     status: function (url) {
-      api_url = url || $rootScope.server;
+      api_url = url || $rootScope.server_url;
       promise =  $http.get(api_url).success(function(data, status, headers, config) {
         $rootScope.connected = true;
       }).error(function(data, status, headers, config) {
@@ -21,7 +21,7 @@ module.service('APIService', function($rootScope, $http, $q) {
 })
 
 module.factory('Employee', function($rootScope, $resource) {
-  return $resource($rootScope.server + '/employees/:id');
+  return $resource($rootScope.server_url + '/employees/:id');
 })
 
 module.factory('$localStorage', function($window) {
@@ -37,6 +37,23 @@ module.factory('$localStorage', function($window) {
       },
       getObject: function(key) {
         return JSON.parse($window.localStorage[key] || '{}');
+      }
+    }
+});
+
+module.factory('$sessionStorage', function($window) {
+    return {
+      set: function(key, value) {
+        $window.sessionStorage[key] = value;
+      },
+      get: function(key, defaultValue) {
+        return $window.sessionStorage[key] || defaultValue;
+      },
+      setObject: function(key, value) {
+        $window.sessionStorage[key] = JSON.stringify(value);
+      },
+      getObject: function(key) {
+        return JSON.parse($window.sessionStorage[key] || '{}');
       }
     }
 });

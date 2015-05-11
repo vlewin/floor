@@ -13,24 +13,20 @@ angular.module('staff', ['ionic', 'ngResource', 'staff.controllers', 'staff.serv
     }
   })
 
-  $rootScope.server = $localStorage.get('server') || 'http://stealth-new.suse.de:3001'
+  $rootScope.server_url = $localStorage.get('server_url') || 'http://10.162.168.55:300'
   $rootScope.connected = $rootScope.connected || false;
   $rootScope.error_message = "No Internet connection or not in the internal SUSE network?"
 
   $rootScope.$on('$stateChangeStart', function(e, toState, toParams, fromState, fromParams) {
-    if($rootScope.connected) {
-      return;
-    } else {
+    if(!$rootScope.connected) {
       console.log("Offline")
-      // FIXME: use APIService.status() see SettingsCtrl
-      $http.get($rootScope.server).success(function(data, status, headers, config) {
-        if(!$rootScope.connected) {
-          console.log("Not connected")
-          $rootScope.connected = true;
+
+      APIService.status($rootScope.server_url).finally(function() {
+        if($rootScope.connected) {
+          $state.transitionTo('tab.employees');
+        } else {
+          $state.transitionTo('tab.status');
         }
-      }).error(function(data, status, headers, config) {
-        $ionicLoading.hide()
-        $state.go('tab.status');
       });
     }
   });
@@ -119,16 +115,6 @@ angular.module('staff', ['ionic', 'ngResource', 'staff.controllers', 'staff.serv
       'tab-apprentices': {
         templateUrl: 'templates/employee-detail.html',
         controller: 'EmployeeDetailCtrl'
-      }
-    }
-  })
-
-  .state('tab.settings', {
-    url: '/settings',
-    views: {
-      'tab-settings': {
-        templateUrl: 'templates/tab-settings.html',
-        controller: 'SettingsCtrl'
       }
     }
   })

@@ -18,18 +18,28 @@ angular.module('staff.controllers', [])
   };
 })
 
-
-.controller('EmployeesCtrl', function($rootScope, $scope, $resource, $interval, $http, $timeout, Employee) {
+.controller('EmployeesCtrl', function($rootScope, $scope, $resource, $interval, $http, $timeout, $sessionStorage, Employee) {
   $scope.searchKey = "";
   $scope.limit = 50;
   $scope.page = 0;
   $scope.total = 0;
-
   $scope.employees = []
+  $scope.error_count = $sessionStorage.get('errors_count') || 0;
 
   $scope.count = function() {
-    $http.get($rootScope.server + '/employees/count').success(function(data, status, headers, config) {
+    $http.get($rootScope.server_url + '/employees/count').success(function(data, status, headers, config) {
       $scope.total = data.count;
+      $sessionStorage.set('errors_count', 0)
+    }).error(function (data, status) {
+      console.log('Try to reload the page: ' + $scope.error_count)
+      if($scope.error_count  >= 1) {
+        console.error('Retry failed!')
+      } else {
+        console.log('Increase counter')
+        window.location.reload();
+        $scope.error_count += 1;
+        $sessionStorage.set('errors_count', $scope.error_count)
+      }
     })
   }
 
@@ -81,7 +91,7 @@ angular.module('staff.controllers', [])
 
 
 .controller('TeamMembersCtrl', function($rootScope, $scope, $http, $stateParams) {
-  $http.get($rootScope.server + '/employees/' + $stateParams.employeeId + '/team').success(function(data, status, headers, config) {
+  $http.get($rootScope.server_url + '/employees/' + $stateParams.employeeId + '/team').success(function(data, status, headers, config) {
     $scope.id = $stateParams.employeeId
     $scope.employees = data
   })
@@ -93,7 +103,7 @@ angular.module('staff.controllers', [])
     hideOnStageChange: false
   });
 
-  $http.get($rootScope.server + '/employees/newcomers').success(function(data, status, headers, config) {
+  $http.get($rootScope.server_url + '/employees/newcomers').success(function(data, status, headers, config) {
     $scope.employees = data
     $ionicLoading.hide();
   })
@@ -105,27 +115,28 @@ angular.module('staff.controllers', [])
     hideOnStageChange: true
   });
 
-  $http.get($rootScope.server + '/employees/apprentices').success(function(data, status, headers, config) {
+  $http.get($rootScope.server_url + '/employees/apprentices').success(function(data, status, headers, config) {
     $scope.employees = data
     $ionicLoading.hide();
   })
 })
 
-.controller('StatusCtrl', function($rootScope, $scope, $http, APIService) {
-  $scope.checkStatus = function () {
-    APIService.status()
-  }
-})
-
-.controller('SettingsCtrl', function($rootScope, $scope, $localStorage, APIService) {
-  $scope.api_url = $rootScope.server;
+.controller('StatusCtrl', function($rootScope, $scope, $http, $state, $localStorage, APIService) {
+  $scope.server_url = $rootScope.server_url;
   $scope.error = null;
 
   $scope.validate = function() {
-    APIService.status($scope.api_url).finally(function() {
+    console.log("Current server URL " + $rootScope.server_url);
+    console.log("Connected? " + $rootScope.connected);
+    console.log("Ping " + $scope.server_url);
+
+    APIService.status($scope.server_url).finally(function() {
+      console.log("DONE Connected? " + $rootScope.connected);
+
       if($rootScope.connected) {
         $scope.error = null;
-        $scope.save()
+        $scope.save();
+        $state.transitionTo('tab.employees');
       } else {
         $scope.error = { 'message': 'API server is offline or incorrect URL' }
       }
@@ -133,8 +144,12 @@ angular.module('staff.controllers', [])
   }
 
   $scope.save = function() {
-    $rootScope.server = $scope.api_url;
-    $localStorage.set('server', $scope.api_url);
+    $rootScope.server_url = $scope.server_url;
+    $localStorage.set('server_url', $scope.server_url);
+  }
+
+  $scope.checkStatus = function () {
+    APIService.status()
   }
 })
 
