@@ -15,7 +15,7 @@ var paths = {
   js: ['./www/js/*.js']
 };
 
-gulp.task('default', ['templatecache']);
+gulp.task('default', ['templatecache', 'css']);
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
@@ -36,8 +36,24 @@ gulp.task('templatecache', function (done) {
     .on('end', done);
 });
 
+gulp.task('css', function(done) {
+  var source = [
+    "./www/lib/ionic/css/ionic.css",
+    "./www/css/*.css"
+  ];
+
+  gulp.src(source)
+  .pipe(concat('source.min.css'))
+  .pipe(minifyCss({
+    keepSpecialComments: 0
+  }))
+  .pipe(gulp.dest('./www/dist/'))
+  .on('end', done);
+});
+
 gulp.task('watch', function() {
   // gulp.watch(paths.sass, ['sass']);
+  gulp.watch(paths.css, ['css']);
   gulp.watch(paths.templatecache, ['templatecache']);
 });
 
