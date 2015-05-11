@@ -13,7 +13,7 @@ angular.module('staff', ['ionic', 'ngResource', 'staff.controllers', 'staff.serv
     }
   })
 
-  $rootScope.server_url = $localStorage.get('server_url') || 'http://10.162.168.55:300'
+  $rootScope.server_url = $localStorage.get('server_url') || 'http://10.162.168.55:3001'
   $rootScope.connected = $rootScope.connected || false;
   $rootScope.error_message = "No Internet connection or not in the internal SUSE network?"
 
