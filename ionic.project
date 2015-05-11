@@ -1,4 +1,8 @@
 {
   "name": "floor",
-  "app_id": "2180fc00"
+  "app_id": "2180fc00",
+  "gulpStartupTasks": [
+    "templatecache",
+    "watch"
+  ]
 }

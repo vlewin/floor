@@ -4,14 +4,18 @@ var bower = require('bower');
 var concat = require('gulp-concat');
 var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
+var templateCache = require('gulp-angular-templatecache');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
 
 var paths = {
-  sass: ['./scss/**/*.scss']
+  templatecache: ['./www/templates/**/*.html'],
+  sass: ['./scss/**/*.scss'],
+  css: ['./www/css/*.css'],
+  js: ['./www/js/*.js']
 };
 
-gulp.task('default', ['sass']);
+gulp.task('default', ['templatecache']);
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
@@ -25,8 +29,16 @@ gulp.task('sass', function(done) {
     .on('end', done);
 });
 
+gulp.task('templatecache', function (done) {
+  gulp.src('./www/templates/**/*.html')
+    .pipe(templateCache({standalone:true}))
+    .pipe(gulp.dest('./www/js'))
+    .on('end', done);
+});
+
 gulp.task('watch', function() {
-  gulp.watch(paths.sass, ['sass']);
+  // gulp.watch(paths.sass, ['sass']);
+  gulp.watch(paths.templatecache, ['templatecache']);
 });
 
 gulp.task('install', ['git-check'], function() {

@@ -1,4 +1,4 @@
-angular.module('staff', ['ionic', 'ngResource', 'staff.controllers', 'staff.services'])
+angular.module('staff', ['ionic', 'ngResource', 'templates', 'staff.controllers', 'staff.services'])
 
 .run(function($ionicPlatform, $rootScope, $localStorage, $location, $state, $http, $ionicLoading, APIService) {
   $ionicPlatform.ready(function() {
@@ -36,14 +36,14 @@ angular.module('staff', ['ionic', 'ngResource', 'staff.controllers', 'staff.serv
   $stateProvider.state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: "templates/tabs.html"
+    templateUrl: "tabs.html"
   })
 
   .state('tab.status', {
     url: '/status',
     views: {
       'tab-status': {
-        templateUrl: 'templates/tab-status.html',
+        templateUrl: 'tab-status.html',
         controller: 'StatusCtrl'
       }
     }
@@ -53,7 +53,7 @@ angular.module('staff', ['ionic', 'ngResource', 'staff.controllers', 'staff.serv
       url: '/employees',
       views: {
         'tab-employees': {
-          templateUrl: 'templates/tab-employees.html',
+          templateUrl: 'tab-employees.html',
           controller: 'EmployeesCtrl'
         }
       }
@@ -63,7 +63,7 @@ angular.module('staff', ['ionic', 'ngResource', 'staff.controllers', 'staff.serv
     url: '/employees/:employeeId',
     views: {
       'tab-employees': {
-        templateUrl: 'templates/employee-detail.html',
+        templateUrl: 'employee-detail.html',
         controller: 'EmployeeDetailCtrl'
       }
     }
@@ -73,7 +73,7 @@ angular.module('staff', ['ionic', 'ngResource', 'staff.controllers', 'staff.serv
     url: '/employees/:employeeId/team',
     views: {
       'tab-employees': {
-        templateUrl: 'templates/team.html',
+        templateUrl: 'team.html',
         controller: 'TeamMembersCtrl'
       }
     }
@@ -83,7 +83,7 @@ angular.module('staff', ['ionic', 'ngResource', 'staff.controllers', 'staff.serv
     url: '/newcomers',
     views: {
       'tab-newcomers': {
-        templateUrl: 'templates/tab-newcomers.html',
+        templateUrl: 'tab-newcomers.html',
         controller: 'NewcomersCtrl'
       }
     }
@@ -93,7 +93,7 @@ angular.module('staff', ['ionic', 'ngResource', 'staff.controllers', 'staff.serv
     url: '/newcomers/:employeeId',
     views: {
       'tab-newcomers': {
-        templateUrl: 'templates/employee-detail.html',
+        templateUrl: 'employee-detail.html',
         controller: 'EmployeeDetailCtrl'
       }
     }
@@ -103,7 +103,7 @@ angular.module('staff', ['ionic', 'ngResource', 'staff.controllers', 'staff.serv
     url: '/apprentices',
     views: {
       'tab-apprentices': {
-        templateUrl: 'templates/tab-apprentices.html',
+        templateUrl: 'tab-apprentices.html',
         controller: 'ApprenticesCtrl'
       }
     }
@@ -113,7 +113,7 @@ angular.module('staff', ['ionic', 'ngResource', 'staff.controllers', 'staff.serv
     url: '/apprentices/:employeeId',
     views: {
       'tab-apprentices': {
-        templateUrl: 'templates/employee-detail.html',
+        templateUrl: 'employee-detail.html',
         controller: 'EmployeeDetailCtrl'
       }
     }
